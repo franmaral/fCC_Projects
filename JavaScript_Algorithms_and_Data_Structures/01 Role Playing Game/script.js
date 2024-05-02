@@ -38,7 +38,8 @@ const monsters = [
   {
     name: "dragon",
     level: 20,
-    health: 300
+    health: 300,
+    image: "./images/Dragon_repeller_dragon.jfif"
   }
 ]
 const locations = [
@@ -73,25 +74,29 @@ const locations = [
     name: "kill monster",
     "button text": ["Go to town square", "Go to town square", "Go to town square"],
     "button functions": [goTown, goTown, easterEgg],
-    text: 'The monster screams "Arg!" as it dies. You gain experience points and find gold.'
+    text: 'The monster screams "Arg!" as it dies. You gain experience points and find gold.',
+    image: "./images/Dragon_repeller_win_monster.jfif"
   },
   {
     name: "lose",
     "button text": ["REPLAY?", "REPLAY?", "REPLAY?"],
     "button functions": [restart, restart, restart],
-    text: "You die. &#x2620;"
+    text: "You die. &#x2620;",
+    image: "./images/Dragon_repeller_lose_monster.jfif"
   },
   { 
     name: "win", 
     "button text": ["REPLAY?", "REPLAY?", "REPLAY?"], 
     "button functions": [restart, restart, restart], 
-    text: "You defeat the dragon! YOU WIN THE GAME! &#x1F389;" 
+    text: "You defeat the dragon! YOU WIN THE GAME! &#x1F389;",
+    image: "./images/Dragon_repeller_win_dragon.jfif"
   },
   {
     name: "easter egg",
     "button text": ["2", "8", "Go to town square?"],
     "button functions": [pickTwo, pickEight, goTown],
-    text: "You find a secret game. Pick a number above. Ten numbers will be randomly chosen between 0 and 10. If the number you choose matches one of the random numbers, you win!"
+    text: "You find a secret game. Pick a number above. Ten numbers will be randomly chosen between 0 and 10. If the number you choose matches one of the random numbers, you win!",
+    image: "./images/Dragon_repeller_win_dragon_1.jfif"
   }
 ];
 
@@ -134,6 +139,8 @@ function buyHealth() {
     health += 10;
     goldText.innerText = gold;
     healthText.innerText = health;
+    text.innerText = "You buy 10x health: potions, herbs and roots.";
+    document.getElementById("img1").src = "./images/Dragon_repeller_buy_health.jfif";
   } else {
     text.innerText = "You do not have enough gold to buy health.";
   }
@@ -147,8 +154,19 @@ function buyWeapon() {
       goldText.innerText = gold;
       let newWeapon = weapons[currentWeapon].name;
       text.innerText = "You now have a " + newWeapon + ".";
-      inventory.push(newWeapon);
+      inventory.push(" " + newWeapon);
       text.innerText += " In your inventory you have: " + inventory;
+
+      if (newWeapon == weapons[1].name) {
+        document.getElementById("img1").src = "./images/Dragon_repeller_buy_dagger.jfif";
+      } else if (newWeapon == weapons[2].name) {
+        document.getElementById("img1").src = "./images/Dragon_repeller_buy_hammer.jfif";
+      } else if (newWeapon == weapons[3].name) {
+        document.getElementById("img1").src = "./images/Dragon_repeller_buy_sword.jfif";
+      }
+      
+
+
     } else {
       text.innerText = "You do not have enough gold to buy a weapon.";
     }
@@ -241,14 +259,17 @@ function defeatMonster() {
   goldText.innerText = gold;
   xpText.innerText = xp;
   update(locations[4]);
+  document.getElementById("img1").src = locations[4].image;
 }
 
 function lose() {
   update(locations[5]);
+  document.getElementById("img1").src = locations[5].image;
 }
 
 function winGame() {
   update(locations[6]);
+  document.getElementById("img1").src = locations[6].image;
 }
 
 function restart() {
@@ -265,6 +286,7 @@ function restart() {
 
 function easterEgg() {
   update(locations[7]);
+  document.getElementById("img1").src = locations[7].image;
 }
 
 function pickTwo() {
